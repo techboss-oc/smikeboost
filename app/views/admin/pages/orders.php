@@ -1,5 +1,5 @@
 <?php
-$orders = db_fetch_all("SELECT o.id, u.username, s.name AS service_name, s.platform, o.quantity, o.amount, o.status, o.created_at, o.provider_order_id
+$orders = db_fetch_all("SELECT o.id, u.username, s.name AS service_name, s.platform, o.quantity, o.amount, o.status, o.created_at, o.provider_order_id, o.provider_id
     FROM orders o
     JOIN users u ON u.id = o.user_id
     JOIN services s ON s.id = o.service_id
@@ -43,11 +43,13 @@ function admin_status_badge($status) {
                     <th>Actions</th>
                 </tr>
             </thead>
+            <?php $metrics = []; try { if (!empty($orders) && function_exists('get_order_metrics_for_user_orders')) { $metrics = get_order_metrics_for_user_orders($orders); } } catch (Throwable $e) {} ?>
             <tbody>
                 <?php if (empty($orders)): ?>
                     <tr><td colspan="10" style="text-align:center; color:#e5e7eb;">No orders yet.</td></tr>
                 <?php else: ?>
                     <?php foreach ($orders as $o): ?>
+                        <?php $mid = (int)$o['id']; $m = isset($metrics[$mid]) ? $metrics[$mid] : []; $status = strtolower(isset($m['status']) ? $m['status'] : $o['status']); ?>
                         <tr data-order-id="<?php echo $o['id']; ?>">
                             <td>#<?php echo e($o['id']); ?></td>
                             <td><?php echo e($o['username']); ?></td>
@@ -55,16 +57,16 @@ function admin_status_badge($status) {
                             <td><?php echo e($o['platform']); ?></td>
                             <td><?php echo number_format((int)$o['quantity']); ?></td>
                             <td><?php echo format_currency($o['amount']); ?></td>
-                            <td><span class="badge status-badge <?php echo admin_status_badge($o['status']); ?>"><?php echo ucfirst($o['status']); ?></span></td>
+                            <td><span class="badge status-badge <?php echo admin_status_badge($status); ?>"><?php echo ucfirst($status); ?></span></td>
                             <td><?php echo e($o['provider_order_id'] ?: '-'); ?></td>
                             <td><?php echo date('d M Y H:i', strtotime($o['created_at'])); ?></td>
                             <td>
-                                <?php if (!empty($o['provider_order_id']) && in_array($o['status'], ['pending', 'processing'])): ?>
+                                <?php if (!empty($o['provider_order_id']) && in_array($status, ['pending', 'processing'])): ?>
                                     <button class="btn btn-sm btn-info" onclick="syncOrder(<?php echo $o['id']; ?>)">
                                         <i class="fas fa-sync"></i> Sync
                                     </button>
                                 <?php endif; ?>
-                                <?php if (in_array($o['status'], ['pending', 'processing'])): ?>
+                                <?php if (in_array($status, ['pending', 'processing'])): ?>
                                     <button class="btn btn-sm btn-danger" onclick="cancelOrder(<?php echo $o['id']; ?>)">
                                         <i class="fas fa-times"></i> Cancel
                                     </button>

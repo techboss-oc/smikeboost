@@ -85,9 +85,9 @@ $orders = db_fetch_all($query, $params);
                             <td><?php echo e($order['service_name'] ?? 'Service'); ?></td>
                             <td><?php echo e($m['avg_time'] ?? '-'); ?></td>
                             <td>
-                                <?php $status = strtolower($m['status'] ?? $order['status']); ?>
+                                <?php $status = strtolower($m['status'] ?? $order['status']); $statusText = $m['status_text'] ?? ucfirst($status); ?>
                                 <span class="badge badge-<?php echo $status === 'completed' ? 'completed' : ($status === 'processing' ? 'processing' : ($status === 'canceled' ? 'danger' : 'pending')); ?>">
-                                    <?php echo ucfirst($status); ?>
+                                    <?php echo e($statusText); ?>
                                 </span>
                             </td>
                             <td><?php echo e($m['remains'] ?? '0'); ?></td>
