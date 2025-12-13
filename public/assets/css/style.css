@@ -1572,7 +1572,7 @@ h3 {
   z-index: 10000; /* Ensure it stays on top */
   display: flex;
   align-items: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 .ticker-label {
@@ -1600,8 +1600,9 @@ h3 {
 .ticker-move {
   display: inline-block;
   white-space: nowrap;
-  padding-right: 100%;
-  animation: ticker 30s linear infinite;
+  padding-right: 0;
+  animation: none !important;
+  transform: none !important;
 }
 
 .ticker-item {

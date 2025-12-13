@@ -33,6 +33,11 @@
             margin-top: 110px;
         }
 
+        .dashboard-body .ticker-move {
+            animation: none !important;
+            transform: none !important;
+        }
+
         /* Collapsible sidebar (desktop) */
         .dashboard-body .dashboard-sidebar.collapsed {
             width: 72px;
