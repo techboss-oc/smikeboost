@@ -25,9 +25,9 @@ define('SITE_KEYWORDS', 'SMM panel Nigeria, buy Instagram followers Nigeria, Tik
 
 // Database Configuration (for future use)
 define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'smikeboost');
+define('DB_USER', 'smikeboo_boost');
+define('DB_PASS', 'smikeboo_boost');
+define('DB_NAME', 'smikeboo_boost');
 
 // Payment Configuration
 define('PAYMENT_GATEWAY', 'flutterwave');
