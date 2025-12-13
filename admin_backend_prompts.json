@@ -1,0 +1,141 @@
+{
+  "project": "SmikeBoost Admin Backend",
+  "admin_design": {
+    "theme": "Dark dashboard with glassmorphism surfaces",
+    "sidebar_style": "Icon + label, purple glow hover",
+    "topbar": "Search, notifications, profile menu"
+  },
+
+  "admin_pages": {
+    "dashboard_home": {
+      "widgets": [
+        "Total Users",
+        "Total Orders",
+        "Pending Orders",
+        "Completed Orders",
+        "Today Revenue",
+        "Wallet Load Today"
+      ],
+      "charts": [
+        "User growth chart",
+        "Orders statistics chart",
+        "Revenue bar chart"
+      ]
+    },
+
+    "orders_management": {
+      "features": [
+        "View all orders",
+        "Filter by platform, status, user",
+        "Change status (processing, completed, canceled)",
+        "Auto-sync with provider API"
+      ]
+    },
+
+    "users_management": {
+      "features": [
+        "List all users",
+        "Suspend/unsuspend",
+        "Modify wallet balance",
+        "Reset password",
+        "View activity logs"
+      ]
+    },
+
+    "services_management": {
+      "features": [
+        "Add new services",
+        "Import services from provider with API",
+        "Enable/disable services",
+        "Change price (auto or manual)",
+        "Bulk update services"
+      ],
+      "service_fields": [
+        "Service ID",
+        "Platform",
+        "Category",
+        "Name",
+        "Description",
+        "Rate per 1000",
+        "Min / Max"
+      ]
+    },
+
+    "providers_management": {
+      "features": [
+        "Add new provider",
+        "Provider API key input",
+        "Base URL input",
+        "Test provider connection",
+        "Sync services",
+        "Set auto-refill"
+      ],
+      "provider_fields": [
+        "Name",
+        "API Key",
+        "API URL",
+        "Auto Order Sync Enabled"
+      ]
+    },
+
+    "payments_management": {
+      "enabled_methods": ["Flutterwave", "Bank Transfer Manual"],
+      "flutterwave": {
+        "fields": ["Public Key", "Secret Key", "Webhook Secret"],
+        "features": ["Auto wallet credit", "Transaction verification"]
+      },
+      "bank_transfer": {
+        "fields": ["Bank Name", "Account Number", "Instructions to user"],
+        "manual_verification": true
+      }
+    },
+
+    "transactions_page": {
+      "fields": ["User", "Amount", "Type", "Gateway", "Status", "Date"],
+      "filters": ["Date", "User", "Status"]
+    },
+
+    "tickets_support": {
+      "features": [
+        "Admin reply to tickets",
+        "Close ticket",
+        "View attachments",
+        "Assign ticket to staff"
+      ]
+    },
+
+    "settings": {
+      "general": [
+        "Site name",
+        "Logo upload",
+        "Primary colors",
+        "Maintenance mode"
+      ],
+      "security": ["Admin roles/permissions", "IP whitelist", "2FA option"],
+      "email": ["SMTP settings", "Email templates", "Test email"]
+    }
+  },
+
+  "APIs": {
+    "providers_api_logic": {
+      "create_order_endpoint": "Send order to provider",
+      "order_status_endpoint": "Auto-sync status",
+      "services_import_endpoint": "Fetch all services",
+      "balance_check_endpoint": "Get provider balance"
+    }
+  },
+
+  "backend_features": {
+    "automatic_order_sync": true,
+    "cron_jobs": [
+      "Check order status every X minutes",
+      "Sync provider services daily"
+    ],
+    "security": [
+      "JWT authentication",
+      "Rate limiting",
+      "Admin role permissions"
+    ],
+    "mvp_ready": true
+  }
+}

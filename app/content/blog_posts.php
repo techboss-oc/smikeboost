@@ -1,0 +1,51 @@
+<?php
+return [
+    [
+        'slug' => 'instagram-growth-nigeria-2025',
+        'title' => '10 Proven Instagram Growth Plays Nigerian Creators Swear By (2025 Edition)',
+        'excerpt' => 'Benchmark your reels, hashtags, and influencer swaps with tactics that already work for Lagos and Abuja niches.',
+        'category' => 'Instagram',
+        'reading_time' => '6 min read',
+        'published_at' => '2024-12-05 09:00:00',
+    ],
+    [
+        'slug' => 'tiktok-sound-trends-lagos',
+        'title' => 'How Lagos Brands Ride TikTok Sound Trends Before They Peak',
+        'excerpt' => 'Set up listening dashboards, trigger automation rules, and cash in before every marketer copies the sound.',
+        'category' => 'TikTok',
+        'reading_time' => '5 min read',
+        'published_at' => '2024-12-03 08:30:00',
+    ],
+    [
+        'slug' => 'youtube-watchtime-blueprint-ng',
+        'title' => 'The YouTube Watch-Time Blueprint for Nigerian Edutainment Channels',
+        'excerpt' => 'Retention curves, thumbnail tests, and SMM boosts that keep viewers glued beyond the first 60 seconds.',
+        'category' => 'YouTube',
+        'reading_time' => '8 min read',
+        'published_at' => '2024-12-01 10:15:00',
+    ],
+    [
+        'slug' => 'whatsapp-community-funnel',
+        'title' => 'Flip WhatsApp Communities into High-LTV Funnels',
+        'excerpt' => 'Build drip sequences, upsell drops, and loyalty rewards using Nigeria-friendly payment links.',
+        'category' => 'Community',
+        'reading_time' => '7 min read',
+        'published_at' => '2024-11-28 12:00:00',
+    ],
+    [
+        'slug' => 'twitter-x-ng-engagement-stack',
+        'title' => 'An Engagement Stack for Twitter (X) Power Users in Nigeria',
+        'excerpt' => 'Thread formulas, quote-bait, and SMM boosts that keep your handle trending without burnout.',
+        'category' => 'Twitter',
+        'reading_time' => '4 min read',
+        'published_at' => '2024-11-24 14:45:00',
+    ],
+    [
+        'slug' => 'agency-reseller-automation',
+        'title' => 'Automation Toolkit for Nigerian SMM Agencies & Resellers',
+        'excerpt' => 'Connect SmikeBoost API with dashboards, invoicing, and client alerts so you sell while you sleep.',
+        'category' => 'Agency',
+        'reading_time' => '9 min read',
+        'published_at' => '2024-11-20 09:20:00',
+    ],
+];

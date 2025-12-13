@@ -1,0 +1,146 @@
+{
+  "project": "SmikeBoost SMM Website",
+  "design_style": {
+    "theme": "Dark mystical fantasy theme identical to the reference image provided",
+    "colors": {
+      "primary": "#a855f7",
+      "secondary": "#8b5cf6",
+      "accent": "#ec4899",
+      "glass_background": "rgba(255, 255, 255, 0.08)",
+      "glass_border": "rgba(255, 255, 255, 0.25)",
+      "text_primary": "#ffffff",
+      "text_secondary": "#d1d5db"
+    },
+    "effects": {
+      "glassmorphism": true,
+      "blur_amount": "25px",
+      "shadow": "0 8px 32px rgba(0,0,0,0.45)",
+      "gradient_background": "dark purple → deep blue mystical gradient",
+      "hero_character": "wizard / mage illustration similar to reference (but unique)",
+      "button_style": "rounded-full, neon purple glow hover"
+    }
+  },
+
+  "frontend_pages": {
+    "home_page": {
+      "sections": [
+        "Hero section with wizard character",
+        "Login form with glassmorphic card",
+        "Social media icons bar",
+        "Why choose us section",
+        "Statistics section",
+        "Services highlights",
+        "Steps to rise on social media",
+        "FAQ accordion",
+        "Blog preview section",
+        "Community join section",
+        "Footer with payment icons and contacts"
+      ]
+    },
+    "services_page": {
+      "filters": ["Platform", "Category", "Price sorting"],
+      "design": "glass cards with icons and soft glowing borders",
+      "service_item_fields": [
+        "Name",
+        "Description",
+        "Min/Max",
+        "Price per 1000",
+        "Button to order"
+      ]
+    },
+    "about_page": {
+      "content": "Brand story, mission, advantages, trust indicators, screenshots",
+      "design": "dark layered backgrounds with purple neon dividers"
+    },
+    "contact_page": {
+      "form_fields": ["Name", "Email", "Message"],
+      "support_links": ["WhatsApp", "Telegram", "Email"],
+      "map": "static fantasy-themed illustrated map background"
+    },
+    "blog_page": {
+      "design": "3-column blog grid with glowing overlay cards",
+      "post_preview": ["Thumbnail", "Author", "Date", "Read more button"]
+    },
+    "auth_pages": {
+      "login_page": {
+        "fields": ["Username", "Password"],
+        "button": "Glass purple button",
+        "links": ["Forgot Password", "Create Account"]
+      },
+      "register_page": {
+        "fields": [
+          "Full Name",
+          "Username",
+          "Email",
+          "Password",
+          "Re-enter Password"
+        ],
+        "button_style": "neon purple glow"
+      },
+      "reset_password_page": {}
+    }
+  },
+
+  "user_dashboard": {
+    "name": "Order Dashboard (In Naira NGN)",
+    "design": "glassmorphic cards, side navigation, purple highlights",
+    "pages": {
+      "dashboard_home": {
+        "stats": ["Total Orders", "Completed", "Pending", "Wallet Balance (₦)"],
+        "quick_actions": ["Add Funds", "New Order", "Order History"]
+      },
+      "new_order_page": {
+        "fields": ["Platform", "Service", "Link", "Quantity"],
+        "currency": "NGN",
+        "auto_price_calculation": true,
+        "design": "2-column glowing card layout"
+      },
+      "order_history_page": {
+        "columns": [
+          "ID",
+          "Service",
+          "Link",
+          "Quantity",
+          "Amount (₦)",
+          "Status",
+          "Date"
+        ],
+        "filters": ["Status", "Date Range"]
+      },
+      "add_funds_page": {
+        "methods": ["Flutterwave", "Bank Transfer (Manual)"],
+        "wallet_display": "Glass balance card",
+        "flutterwave_integration": true
+      },
+      "profile_page": {
+        "fields": ["Name", "Username", "Email", "API Key"],
+        "features": ["Regenerate API key", "Enable 2FA"]
+      }
+    }
+  },
+
+  "components": {
+    "glass_card": {
+      "background": "rgba(255,255,255,0.08)",
+      "border": "1px solid rgba(255,255,255,0.25)",
+      "backdrop_filter": "blur(25px)"
+    },
+    "buttons": {
+      "primary": {
+        "shape": "rounded-full",
+        "color": "purple gradient",
+        "hover_glow": true
+      }
+    }
+  },
+
+  "functional_requirements": {
+    "mobile_responsive": true,
+    "dark_mode_default": true,
+    "smooth_animations": true,
+    "scroll_reveal_effects": true,
+    "SEO_ready": true,
+    "fast_load": true,
+    "mvp_ready": true
+  }
+}

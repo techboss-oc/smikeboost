@@ -1,0 +1,18 @@
+Options -Indexes
+RewriteEngine On
+
+# Allow direct access if someone explicitly targets /public
+RewriteRule ^public/ - [L]
+
+# Let existing files or directories in this folder pass through untouched
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Proxy asset-style directories to the real files inside /public
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(assets|uploads|admin)/(.*)$ public/$1/$2 [L]
+
+# Everything else is handled by the public front controller
+RewriteRule ^ public/index.php [QSA,L]

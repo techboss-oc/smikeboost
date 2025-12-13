@@ -1,0 +1,52 @@
+SmikeBoost Cron Setup Guide
+
+What this cron does
+- Checks provider status for processing orders and marks them completed or refunded
+- Sends automatic emails for completed or canceled orders
+- Logs activity to app/cron_debug.log
+
+Recommended schedule
+- Every 5 minutes
+
+Linux (crontab)
+1) Find PHP path: which php
+2) Edit crontab: crontab -e
+3) Add entry (adjust paths):
+*/5 * * * * /usr/bin/php /var/www/your-site/public/cron.php >/dev/null 2>&1
+
+Environment
+- Ensure ENVIRONMENT=production is set in the web server or shell if used
+
+cPanel
+1) cPanel → Cron Jobs
+2) Common settings: Every 5 minutes
+3) Command:
+/usr/local/bin/php /home/username/public_html/cron.php >/dev/null 2>&1
+
+Plesk
+1) Tools & Settings → Scheduled Tasks → Add Task
+2) Command:
+php /var/www/vhosts/your-domain/httpdocs/cron.php
+3) Schedule: Every 5 minutes
+
+Troubleshooting
+- Check app/cron_debug.log for HTTP status and responses
+- Verify provider API credentials in Admin → Providers
+- Confirm orders move to "processing" with a provider_order_id
+- Ensure outgoing email SMTP settings are correct in Admin → Settings
+Using cron-job.org (HTTP-based scheduler)
+1) Create a free account at https://cron-job.org/
+2) Add a new job and set the URL to your cron endpoint:
+   - Example: https://yourdomain.com/cron.php
+3) Method: GET (default) or POST (both work for this endpoint)
+4) Schedule: Every 5 minutes (or per your preference)
+5) Advanced options (optional):
+   - Monitoring: enable status notifications
+   - Request headers: you can add a simple header like X-Requested-By: cron-job.org
+6) Save the job and run a Test Run to verify it executes correctly.
+
+Notes for cron-job.org
+- Ensure cron.php is publicly reachable over HTTPS.
+- The script writes to app/cron_debug.log; check it after test runs for confirmation.
+- Provider API credentials must be configured in Admin → Providers.
+- Orders should have moved to "processing" with a provider_order_id to be eligible for status updates.

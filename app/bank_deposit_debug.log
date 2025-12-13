@@ -1,0 +1,27 @@
+[2025-12-07 04:55:52] Bank transfer POST payload: {"csrf_token":"1cfb8eab9a0e8fa456d89b39c6d52bc55142521dc2e60bb8d67c157ebec72f3e","amount":"1000"}
+[2025-12-07 04:55:52] Incoming proof upload error code: 0
+[2025-12-07 04:55:52] Detected mime type: image/png
+[2025-12-07 04:55:52] Proof uploaded to C:\laragon\www\boost/public/uploads/proofs/proof_2_1765079752.png
+[2025-12-07 04:59:06] Bank transfer POST payload: {"csrf_token":"1cfb8eab9a0e8fa456d89b39c6d52bc55142521dc2e60bb8d67c157ebec72f3e","amount":"1000"}
+[2025-12-07 04:59:06] Incoming proof upload error code: 0
+[2025-12-07 04:59:06] Detected mime type: image/png
+[2025-12-07 04:59:06] Proof uploaded to C:\laragon\www\boost/public/uploads/proofs/proof_2_1765079946.png
+[2025-12-07 05:03:18] Bank transfer POST payload: {"csrf_token":"1cfb8eab9a0e8fa456d89b39c6d52bc55142521dc2e60bb8d67c157ebec72f3e","amount":"2000"}
+[2025-12-07 05:03:18] Incoming proof upload error code: 0
+[2025-12-07 05:03:18] Detected mime type: image/png
+[2025-12-07 05:03:18] Proof uploaded to C:\laragon\www\boost/public/uploads/proofs/proof_2_1765080198.png
+[2025-12-07 05:04:48] Bank transfer POST payload: {"csrf_token":"1cfb8eab9a0e8fa456d89b39c6d52bc55142521dc2e60bb8d67c157ebec72f3e","amount":"2000"}
+[2025-12-07 05:04:48] Incoming proof upload error code: 0
+[2025-12-07 05:04:48] Detected mime type: image/png
+[2025-12-07 05:04:48] Proof uploaded to C:\laragon\www\boost/public/uploads/proofs/proof_2_1765080288.png
+[2025-12-07 05:04:48] Column check failed: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '?' at line 1
+[2025-12-07 05:04:48] proof_image column missing; omitting proof path.
+[2025-12-07 05:04:48] Transaction create failed: SQLSTATE[01000]: Warning: 1265 Data truncated for column 'type' at row 1
+[2025-12-07 05:14:04] Bank transfer POST payload: {"csrf_token":"1cfb8eab9a0e8fa456d89b39c6d52bc55142521dc2e60bb8d67c157ebec72f3e","amount":"1000"}
+[2025-12-07 05:14:04] Incoming proof upload error code: 0
+[2025-12-07 05:14:04] Detected mime type: image/png
+[2025-12-07 05:14:04] Proof uploaded to C:\laragon\www\boost/public/uploads/proofs/proof_2_1765080844.png
+[2025-12-07 05:14:04] Updated transactions.type enum to include deposit.
+[2025-12-07 05:14:04] proof_image column present; keeping proof path.
+[2025-12-07 05:14:05] Transaction created for user 2
+[2025-12-07 05:14:05] Redirecting with success message.
