@@ -27,7 +27,7 @@ $widgets = [
             <div class="glass" style="display:flex; align-items:center; justify-content:space-between; color:#fff;">
                 <div>
                     <p style="margin:0; color:#e5e7eb; font-size:0.9rem;"><?php echo e($w['label']); ?></p>
-                    <h2 style="margin:6px 0 0 0; color:#fff; font-size:1.4rem;"><?php echo e($w['value']); ?></h2>
+                    <h2 style="margin:6px 0 0 0; color:#fff; font-size:1.4rem;"><?php echo $w['value']; ?></h2>
                 </div>
                 <div style="width:42px; height:42px; border-radius:12px; background:rgba(168,85,247,0.18); display:grid; place-items:center; color:#fff;">
                     <i class="fas <?php echo e($w['icon']); ?>"></i>

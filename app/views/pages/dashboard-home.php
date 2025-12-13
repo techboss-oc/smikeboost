@@ -312,7 +312,7 @@ try {
                                     <p class="text-secondary mb-xs" style="margin: 0 0 0.25rem 0; font-size: 0.85rem;">#<?php echo e($order['id']); ?></p>
                                     <small class="badge badge-<?php echo $st === 'completed' ? 'completed' : ($st === 'processing' ? 'processing' : ($st === 'canceled' ? 'danger' : 'pending')); ?>" style="font-size: 0.7rem; padding: 0.15rem 0.5rem;"><?php echo ucfirst($st); ?></small>
                                 </div>
-                                <div style="font-weight: 600; font-size: 0.9rem;"><?php echo format_currency($amt); ?></div>
+                                <div style="font-weight: 600; font-size: 0.9rem;"><?php echo CURRENCY_SYMBOL . number_format($amt, 2); ?></div>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
@@ -371,13 +371,13 @@ try {
         const qty = parseFloat(document.getElementById('quantity').value || 0);
 
         document.getElementById('service-name').textContent = name;
-        document.getElementById('price-per-1000').textContent = '<?php echo CURRENCY_SYMBOL; ?>' + price.toLocaleString();
+        document.getElementById('price-per-1000').textContent = '<?php echo CURRENCY_SYMBOL; ?>' + price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
         document.getElementById('avg-time').textContent = (selected.dataset ? selected.dataset.avg : '-') || '-';
         document.getElementById('service-desc').textContent = (selected.dataset ? selected.dataset.desc : '') || '-';
         document.getElementById('qty-display').textContent = qty.toLocaleString();
         document.getElementById('total-amount').textContent = '<?php echo CURRENCY_SYMBOL; ?>' + ((qty / 1000) * price).toLocaleString('en-US', {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
         });
     }
 </script>

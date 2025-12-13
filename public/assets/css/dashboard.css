@@ -546,6 +546,27 @@ textarea {
   font-family: inherit;
 }
 
+/* Ensure desktop select dropdowns are readable on dark theme */
+select option,
+select optgroup {
+  background: #1a1625;
+  color: var(--text-primary);
+}
+
+/* Bootstrap-like dropdown menus on dark theme */
+.dropdown-menu {
+  background: #1a1625;
+  color: var(--text-primary);
+  border: 1px solid var(--glass-border);
+}
+.dropdown-menu .dropdown-item {
+  color: var(--text-secondary);
+}
+.dropdown-menu .dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-primary);
+}
+
 .form-control:focus,
 input:focus,
 select:focus,

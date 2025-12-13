@@ -32,7 +32,7 @@ define('DB_NAME', 'smikeboo_boost');
 // Payment Configuration
 define('PAYMENT_GATEWAY', 'flutterwave');
 define('CURRENCY', 'NGN');
-define('CURRENCY_SYMBOL', '&#8358;');
+define('CURRENCY_SYMBOL', '₦');
 define('CURRENCY_CODE', 'NGN');
 
 // API Configuration

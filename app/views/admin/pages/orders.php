@@ -1,5 +1,5 @@
 <?php
-$orders = db_fetch_all("SELECT o.id, u.username, s.name AS service_name, s.platform, o.quantity, o.amount, o.status, o.created_at, o.provider_order_id, o.provider_id
+$orders = db_fetch_all("SELECT o.id, u.username, s.name AS service_name, s.platform, o.quantity, o.amount, o.status, o.created_at, o.provider_order_id, s.provider_id AS provider_id
     FROM orders o
     JOIN users u ON u.id = o.user_id
     JOIN services s ON s.id = o.service_id

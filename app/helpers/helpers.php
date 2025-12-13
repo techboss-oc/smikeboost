@@ -438,6 +438,13 @@ function get_order_metrics_for_user_orders($orders)
     $providers = [];
     foreach ($orders as $o) {
         $pid = isset($o['provider_id']) ? $o['provider_id'] : null;
+        if (!$pid) {
+            $sid = isset($o['service_id']) ? $o['service_id'] : null;
+            if ($sid) {
+                $sr = db_fetch('SELECT provider_id FROM services WHERE id = :id', ['id' => $sid]);
+                $pid = $sr ? ($sr['provider_id'] ?? null) : null;
+            }
+        }
         if ($pid && !isset($providers[$pid])) {
             $row = db_fetch('SELECT id, api_url, api_key FROM providers WHERE id = :id', ['id' => $pid]);
             if ($row) $providers[$pid] = $row;
@@ -454,6 +461,13 @@ function get_order_metrics_for_user_orders($orders)
             'status' => isset($o['status']) ? strtolower((string)$o['status']) : 'pending',
         ];
         $provId = isset($o['provider_id']) ? $o['provider_id'] : null;
+        if (!$provId) {
+            $sid = isset($o['service_id']) ? $o['service_id'] : null;
+            if ($sid) {
+                $sr = db_fetch('SELECT provider_id FROM services WHERE id = :id', ['id' => $sid]);
+                $provId = $sr ? ($sr['provider_id'] ?? null) : null;
+            }
+        }
         $provOrderId = isset($o['provider_order_id']) ? $o['provider_order_id'] : null;
         if (!$provId || !$provOrderId) continue;
         $provider = isset($providers[$provId]) ? $providers[$provId] : null;
