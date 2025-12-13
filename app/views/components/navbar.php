@@ -21,7 +21,7 @@ try {
 } catch (Exception $e) {
 }
 ?>
-<?php if (!empty($ticker_news)): ?>
+<?php if (get_setting('enable_ticker', '1') === '1' && !empty($ticker_news)): ?>
 <div class="news-ticker-wrap">
     <div class="ticker-label">UPDATES</div>
     <div class="ticker-container">

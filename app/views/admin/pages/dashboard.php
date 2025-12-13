@@ -2,12 +2,12 @@
 // Pull live stats from database
 $totalUsers = (int) (db_fetch('SELECT COUNT(*) AS c FROM users')['c'] ?? 0);
 $totalOrders = (int) (db_fetch('SELECT COUNT(*) AS c FROM orders')['c'] ?? 0);
-$pendingOrders = (int) (db_fetch("SELECT COUNT(*) AS c FROM orders WHERE status = 'pending'")['c'] ?? 0);
-$completedOrders = (int) (db_fetch("SELECT COUNT(*) AS c FROM orders WHERE status = 'completed'")['c'] ?? 0);
-$cancelledOrders = (int) (db_fetch("SELECT COUNT(*) AS c FROM orders WHERE status = 'canceled'")['c'] ?? 0);
+$pendingOrders = (int) (db_fetch("SELECT COUNT(*) AS c FROM orders WHERE LOWER(status) = 'pending'")["c"] ?? 0);
+$completedOrders = (int) (db_fetch("SELECT COUNT(*) AS c FROM orders WHERE LOWER(status) = 'completed'")["c"] ?? 0);
+$cancelledOrders = (int) (db_fetch("SELECT COUNT(*) AS c FROM orders WHERE LOWER(status) IN ('canceled','cancelled')")["c"] ?? 0);
 
-$todayRevenue = (float) (db_fetch("SELECT COALESCE(SUM(amount),0) AS amt FROM orders WHERE status = 'completed' AND DATE(created_at) = CURDATE()")['amt'] ?? 0);
-$walletLoadToday = (float) (db_fetch("SELECT COALESCE(SUM(amount),0) AS amt FROM transactions WHERE type = 'credit' AND status = 'completed' AND DATE(created_at) = CURDATE()")['amt'] ?? 0);
+$todayRevenue = (float) (db_fetch("SELECT COALESCE(SUM(amount),0) AS amt FROM orders WHERE LOWER(status) IN ('completed','success') AND DATE(created_at) = CURDATE()")["amt"] ?? 0);
+$walletLoadToday = (float) (db_fetch("SELECT COALESCE(SUM(amount),0) AS amt FROM transactions WHERE LOWER(type) IN ('credit','deposit','fund') AND LOWER(status) IN ('completed','success','paid') AND DATE(created_at) = CURDATE()")["amt"] ?? 0);
 
 $widgets = [
     ['label' => 'Total Users', 'value' => number_format($totalUsers), 'icon' => 'fa-users'],

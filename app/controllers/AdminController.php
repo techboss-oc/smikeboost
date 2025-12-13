@@ -123,12 +123,12 @@ class AdminController
                 $bulk = $_POST['bulk_action'] ?? '';
                 $ids = array_filter(array_map('intval', $_POST['ids'] ?? []));
                 $catIds = array_filter(array_map('intval', $_POST['cat_ids'] ?? []));
-                
+
                 if (empty($ids) && empty($catIds)) {
                     admin_flash('error', 'No services or categories selected.');
                     redirect('admin/services');
                 }
-                
+
                 // Handle services
                 if (!empty($ids)) {
                     $in = implode(',', array_fill(0, count($ids), '?'));
@@ -139,7 +139,7 @@ class AdminController
                         db_execute("UPDATE services SET deleted_at = NOW() WHERE id IN ({$in})", $ids);
                     }
                 }
-                
+
                 // Handle categories
                 if (!empty($catIds)) {
                     $catIn = implode(',', array_fill(0, count($catIds), '?'));
@@ -160,7 +160,7 @@ class AdminController
                         db_execute("DELETE FROM categories WHERE id IN ({$catIn})", $catIds);
                     }
                 }
-                
+
                 admin_flash('success', 'Bulk action applied successfully.');
                 redirect('admin/services');
             }
@@ -200,12 +200,12 @@ class AdminController
             if ($action === 'toggle_category_status') {
                 $catId = (int)($_POST['category_id'] ?? 0);
                 $targetStatus = ($_POST['target_status'] ?? 'enabled') === 'disabled' ? 'disabled' : 'enabled';
-                
+
                 if (!$catId) {
                     admin_flash('error', 'Invalid category.');
                     redirect('admin/services');
                 }
-                
+
                 db_execute("UPDATE categories SET status = :status WHERE id = :id", ['status' => $targetStatus, 'id' => $catId]);
                 admin_flash('success', 'Category status updated.');
                 redirect('admin/services');
@@ -213,12 +213,12 @@ class AdminController
 
             if ($action === 'delete_category') {
                 $catId = (int)($_POST['category_id'] ?? 0);
-                
+
                 if (!$catId) {
                     admin_flash('error', 'Invalid category.');
                     redirect('admin/services');
                 }
-                
+
                 $cat = db_fetch("SELECT name FROM categories WHERE id = :id LIMIT 1", ['id' => $catId]);
                 if ($cat) {
                     db_execute("UPDATE services SET category = 'Uncategorized' WHERE category = :name", ['name' => $cat['name']]);
@@ -401,7 +401,8 @@ class AdminController
             'role' => $user['role'] ?? 'user',
         ];
         flash('success', 'You are now logged in as ' . $user['username'] . '.');
-        redirect('dashboard');
+        header('Location: ' . public_url('dashboard'));
+        exit;
     }
 
     public function services()
@@ -422,12 +423,12 @@ class AdminController
             // Category actions
             if ($action === 'delete_category') {
                 $catId = (int)($_POST['category_id'] ?? 0);
-                
+
                 if (!$catId) {
                     admin_flash('error', 'Invalid category.');
                     redirect('admin/services');
                 }
-                
+
                 $cat = db_fetch("SELECT name FROM categories WHERE id = :id LIMIT 1", ['id' => $catId]);
                 if ($cat) {
                     db_execute("UPDATE services SET category = 'Uncategorized' WHERE category = :name", ['name' => $cat['name']]);
@@ -442,12 +443,12 @@ class AdminController
             if ($action === 'toggle_category_status') {
                 $catId = (int)($_POST['category_id'] ?? 0);
                 $targetStatus = ($_POST['target_status'] ?? 'enabled') === 'disabled' ? 'disabled' : 'enabled';
-                
+
                 if (!$catId) {
                     admin_flash('error', 'Invalid category.');
                     redirect('admin/services');
                 }
-                
+
                 db_execute("UPDATE categories SET status = :status WHERE id = :id", ['status' => $targetStatus, 'id' => $catId]);
                 admin_flash('success', 'Category status updated.');
                 redirect('admin/services');
@@ -507,12 +508,12 @@ class AdminController
                 $bulk = $_POST['bulk_action'] ?? '';
                 $ids = array_filter(array_map('intval', $_POST['ids'] ?? []));
                 $catIds = array_filter(array_map('intval', $_POST['cat_ids'] ?? []));
-                
+
                 if (empty($ids) && empty($catIds)) {
                     admin_flash('error', 'No services or categories selected.');
                     redirect('admin/services');
                 }
-                
+
                 if (!empty($ids)) {
                     $in = implode(',', array_fill(0, count($ids), '?'));
                     if ($bulk === 'enable' || $bulk === 'disable') {
@@ -522,7 +523,7 @@ class AdminController
                         db_execute("UPDATE services SET deleted_at = NOW() WHERE id IN ({$in})", $ids);
                     }
                 }
-                
+
                 if (!empty($catIds)) {
                     $catIn = implode(',', array_fill(0, count($catIds), '?'));
                     if ($bulk === 'enable' || $bulk === 'disable') {
@@ -540,7 +541,7 @@ class AdminController
                         db_execute("DELETE FROM categories WHERE id IN ({$catIn})", $catIds);
                     }
                 }
-                
+
                 admin_flash('success', 'Bulk action applied successfully.');
                 redirect('admin/services');
             }
@@ -651,7 +652,7 @@ class AdminController
                     error_log("Import First API item: " . json_encode($resp[0]));
                 }
 
-                $selected = array_map(function($id) {
+                $selected = array_map(function ($id) {
                     return is_scalar($id) ? trim((string)$id) : '';
                 }, $selected);
                 $selected = array_filter($selected);
@@ -665,7 +666,9 @@ class AdminController
                     $selectedNormalized[] = (string)$id; // Ensure string
                 }
                 $selectedNormalized = array_unique($selectedNormalized);
-                $added = 0; $updated = 0; $categoriesCreated = 0;
+                $added = 0;
+                $updated = 0;
+                $categoriesCreated = 0;
 
                 foreach ($resp as $item) {
                     if (!is_array($item)) continue;
@@ -696,7 +699,7 @@ class AdminController
                     $platform = $item['type'] ?? ($item['platform'] ?? 'generic');
                     $category = $item['category'] ?? ($item['cat'] ?? ($item['type'] ?? 'Uncategorized'));
                     if (empty($category)) $category = 'Uncategorized';
-                    
+
                     $name = $item['name'] ?? '';
                     if (!$name) continue;
                     $rate = isset($item['rate']) ? (float)$item['rate'] : (float)($item['price'] ?? 0);
@@ -797,7 +800,9 @@ class AdminController
                     admin_flash('error', 'Import failed from provider.');
                     redirect('admin/services');
                 }
-                $added = 0; $updated = 0; $categoriesCreated = 0;
+                $added = 0;
+                $updated = 0;
+                $categoriesCreated = 0;
 
                 foreach ($resp as $item) {
                     if (!is_array($item)) continue;
@@ -810,7 +815,7 @@ class AdminController
                     $platform = $item['type'] ?? ($item['platform'] ?? 'generic');
                     $category = $item['category'] ?? ($item['cat'] ?? ($item['type'] ?? 'Uncategorized'));
                     if (empty($category)) $category = 'Uncategorized';
-                    
+
                     $name = $item['name'] ?? '';
                     if (!$name) continue;
                     $rate = isset($item['rate']) ? (float)$item['rate'] : (float)($item['price'] ?? 0);
@@ -960,7 +965,9 @@ class AdminController
                     $parts = array_map('trim', str_getcsv($line));
                     if (count($parts) < 7) continue;
                     [$platform, $category, $name, $rate, $min, $max, $status] = $parts;
-                    $rate = (float)$rate; $min = (int)$min; $max = (int)$max;
+                    $rate = (float)$rate;
+                    $min = (int)$min;
+                    $max = (int)$max;
                     $status = strtolower($status) === 'disabled' ? 'disabled' : 'enabled';
                     if (!$platform || !$category || !$name || $rate <= 0 || $min <= 0 || $max <= 0) continue;
                     db_execute(
@@ -1115,21 +1122,32 @@ class AdminController
             }
 
             $section = $_POST['section'] ?? '';
-            
+
             // Define keys for each section
             $sectionKeys = [
                 'general' => ['active_payment_gateway', 'min_deposit', 'max_deposit'],
-                'flutterwave' => ['flutterwave_enabled', 'flutterwave_env', 'flutterwave_public_key', 
-                                  'flutterwave_secret_key', 'flutterwave_encryption_key', 'flutterwave_webhook_secret'],
+                'flutterwave' => [
+                    'flutterwave_enabled',
+                    'flutterwave_env',
+                    'flutterwave_public_key',
+                    'flutterwave_secret_key',
+                    'flutterwave_encryption_key',
+                    'flutterwave_webhook_secret'
+                ],
                 'paystack' => ['paystack_enabled', 'paystack_env', 'paystack_public_key', 'paystack_secret_key'],
-                'bank' => ['bank_transfer_enabled', 'bank_name', 'bank_account_name', 
-                          'bank_account_number', 'bank_instructions'],
+                'bank' => [
+                    'bank_transfer_enabled',
+                    'bank_name',
+                    'bank_account_name',
+                    'bank_account_number',
+                    'bank_instructions'
+                ],
                 'crypto' => ['crypto_enabled', 'crypto_btc_address', 'crypto_usdt_address', 'crypto_eth_address']
             ];
 
             // Get keys for the submitted section
             $keys = $sectionKeys[$section] ?? [];
-            
+
             if (empty($keys)) {
                 admin_flash('error', 'Invalid form section.');
                 redirect('admin/payments');
@@ -1138,11 +1156,11 @@ class AdminController
 
             $saved = 0;
             $errors = [];
-            
+
             foreach ($keys as $key) {
                 // For checkbox fields, use '0' if not present, otherwise use the posted value
                 $value = $_POST[$key] ?? '0';
-                
+
                 $result = update_setting($key, $value);
                 if ($result) {
                     $saved++;
@@ -1158,7 +1176,7 @@ class AdminController
                 'bank' => 'Bank Transfer',
                 'crypto' => 'Cryptocurrency'
             ];
-            
+
             $sectionName = $sectionNames[$section] ?? ucfirst($section);
 
             if (empty($errors)) {
@@ -1270,16 +1288,30 @@ class AdminController
 
             $keys = [
                 // General settings (payment settings are now in admin/payments)
-                'site_name', 'child_panel_price', 'referral_commission_rate', 'referral_min_payout',
-                'contact_email', 'contact_phone', 'contact_whatsapp', 'contact_telegram', 'contact_address',
+                'site_name',
+                'child_panel_price',
+                'referral_commission_rate',
+                'referral_min_payout',
+                'contact_email',
+                'contact_phone',
+                'contact_whatsapp',
+                'contact_telegram',
+                'contact_address',
                 // Widget settings
-                'enable_whatsapp', 'whatsapp_number', 'enable_tawk', 'tawk_to_id',
+                'enable_whatsapp',
+                'whatsapp_number',
+                'enable_tawk',
+                'tawk_to_id',
+                // Ticker
+                'enable_ticker',
                 // Auth settings
-                'google_auth_enabled', 'google_client_id', 'google_client_secret'
+                'google_auth_enabled',
+                'google_client_id',
+                'google_client_secret'
             ];
-            
+
             // Handle checkboxes (if unchecked, they won't be in $_POST)
-            $checkboxes = ['enable_whatsapp', 'enable_tawk', 'google_auth_enabled'];
+            $checkboxes = ['enable_whatsapp', 'enable_tawk', 'google_auth_enabled', 'enable_ticker'];
             foreach ($checkboxes as $chk) {
                 if (!isset($_POST[$chk])) {
                     update_setting($chk, '0');
@@ -1300,23 +1332,23 @@ class AdminController
     public function blog()
     {
         admin_require_login();
-        
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $csrf = $_POST['csrf_token'] ?? '';
             if (!admin_verify_csrf($csrf)) {
                 admin_flash('error', 'Invalid session token.');
                 redirect('admin/blog');
             }
-            
+
             $action = $_POST['action'] ?? '';
-            
+
             if ($action === 'create') {
                 $title = $_POST['title'];
                 $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $title)));
                 $content = $_POST['content'];
                 $excerpt = $_POST['excerpt'];
                 $status = $_POST['status'];
-                
+
                 $imagePath = null;
                 if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
                     $file = $_FILES['image'];
@@ -1334,7 +1366,7 @@ class AdminController
                         }
                     }
                 }
-                
+
                 try {
                     db_execute(
                         "INSERT INTO posts (title, slug, content, excerpt, status, author_id, image) VALUES (:title, :slug, :content, :excerpt, :status, :author_id, :image)",
@@ -1375,7 +1407,7 @@ class AdminController
     public function cancelOrder()
     {
         admin_require_login();
-        
+
         $input = json_decode(file_get_contents('php://input'), true);
         $orderId = (int)($input['order_id'] ?? 0);
         if (!$orderId) {
@@ -1459,7 +1491,6 @@ class AdminController
             } else {
                 echo json_encode(['success' => true, 'message' => 'Order status is still ' . ucfirst($status) . '.', 'new_status' => $status]);
             }
-
         } catch (Exception $e) {
             echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
         }

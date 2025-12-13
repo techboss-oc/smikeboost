@@ -86,6 +86,18 @@
         </div>
 
         <div class="glass" style="margin-bottom:16px;">
+            <h3 style="margin:0 0 12px 0; color:#e5e7eb;">News Ticker</h3>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:12px;">
+                <div style="grid-column: 1 / -1;">
+                    <label style="display:flex; align-items:center; gap:8px;">
+                        <input type="checkbox" name="enable_ticker" value="1" <?php echo get_setting('enable_ticker', '1') === '1' ? 'checked' : ''; ?>>
+                        Enable Updates Ticker at top of pages
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass" style="margin-bottom:16px;">
             <h3 style="margin:0 0 12px 0; color:#e5e7eb;">Google Authentication</h3>
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap:12px;">
                 <div style="grid-column: 1 / -1;">

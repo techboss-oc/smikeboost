@@ -15,9 +15,9 @@ $userId = $user['id'] ?? 0;
 $totals = db_fetch(
     "SELECT 
         COUNT(*) AS total,
-        SUM(status='completed') AS completed,
-        SUM(status='processing') AS processing,
-        SUM(status='pending') AS pending
+        SUM(CASE WHEN LOWER(status)='completed' THEN 1 ELSE 0 END) AS completed,
+        SUM(CASE WHEN LOWER(status)='processing' THEN 1 ELSE 0 END) AS processing,
+        SUM(CASE WHEN LOWER(status)='pending' THEN 1 ELSE 0 END) AS pending
      FROM orders WHERE user_id = :uid",
     ['uid' => $userId]
 ) ?? ['total' => 0, 'completed' => 0, 'processing' => 0, 'pending' => 0];
