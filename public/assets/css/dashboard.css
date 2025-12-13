@@ -549,8 +549,8 @@ textarea {
 /* Ensure desktop select dropdowns are readable on dark theme */
 select option,
 select optgroup {
-  background: #1a1625;
-  color: var(--text-primary);
+  background-color: #1a1625 !important;
+  color: #ffffff !important;
 }
 
 /* Bootstrap-like dropdown menus on dark theme */

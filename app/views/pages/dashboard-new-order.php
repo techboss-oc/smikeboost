@@ -179,9 +179,9 @@ function updateOrderPrice() {
     const qty = parseFloat(document.getElementById('quantity').value || 0);
 
     document.getElementById('service-name').textContent = name;
-    document.getElementById('price-per-1000').textContent = '<?php echo CURRENCY_SYMBOL; ?>' + price.toLocaleString();
+    document.getElementById('price-per-1000').textContent = '<?php echo CURRENCY_SYMBOL; ?>' + price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
     document.getElementById('qty-display').textContent = qty.toLocaleString();
-    document.getElementById('total-amount').textContent = '<?php echo CURRENCY_SYMBOL; ?>' + ((qty / 1000) * price).toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    document.getElementById('total-amount').textContent = '<?php echo CURRENCY_SYMBOL; ?>' + ((qty / 1000) * price).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 function showModal(title, message, isSuccess = true) {

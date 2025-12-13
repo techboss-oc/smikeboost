@@ -306,11 +306,12 @@ try {
                         <?php foreach ($recentOrders as $order): ?>
                             <?php $m = $recentMetrics[(int)$order['id']] ?? null;
                             $st = strtolower($m['status'] ?? $order['status']);
+                            $stText = $m['status_text'] ?? ucfirst($st);
                             $amt = isset($m['charge']) ? (float)$m['charge'] : (float)$order['amount']; ?>
                             <div class="recent-order-card">
                                 <div>
                                     <p class="text-secondary mb-xs" style="margin: 0 0 0.25rem 0; font-size: 0.85rem;">#<?php echo e($order['id']); ?></p>
-                                    <small class="badge badge-<?php echo $st === 'completed' ? 'completed' : ($st === 'processing' ? 'processing' : ($st === 'canceled' ? 'danger' : 'pending')); ?>" style="font-size: 0.7rem; padding: 0.15rem 0.5rem;"><?php echo ucfirst($st); ?></small>
+                                    <small class="badge badge-<?php echo $st === 'completed' ? 'completed' : ($st === 'processing' ? 'processing' : ($st === 'canceled' ? 'danger' : 'pending')); ?>" style="font-size: 0.7rem; padding: 0.15rem 0.5rem;"><?php echo e($stText); ?></small>
                                 </div>
                                 <div style="font-weight: 600; font-size: 0.9rem;"><?php echo CURRENCY_SYMBOL . number_format($amt, 2); ?></div>
                             </div>
@@ -371,7 +372,10 @@ try {
         const qty = parseFloat(document.getElementById('quantity').value || 0);
 
         document.getElementById('service-name').textContent = name;
-        document.getElementById('price-per-1000').textContent = '<?php echo CURRENCY_SYMBOL; ?>' + price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        document.getElementById('price-per-1000').textContent = '<?php echo CURRENCY_SYMBOL; ?>' + price.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
         document.getElementById('avg-time').textContent = (selected.dataset ? selected.dataset.avg : '-') || '-';
         document.getElementById('service-desc').textContent = (selected.dataset ? selected.dataset.desc : '') || '-';
         document.getElementById('qty-display').textContent = qty.toLocaleString();
@@ -393,7 +397,7 @@ try {
                         if (!card) return;
                         var badge = card.querySelector('.badge');
                         var amount = card.querySelector('div[style*="font-weight: 600"]');
-                        if (badge) badge.textContent = (<?php echo json_encode(ucfirst(strtolower($m['status']))); ?>);
+                        if (badge) badge.textContent = (<?php echo json_encode($m['status_text'] ?? ucfirst(strtolower($m['status']))); ?>);
                         if (badge) {
                             var s = <?php echo json_encode(strtolower($m['status'])); ?>;
                             badge.className = 'badge badge-' + (s === 'completed' ? 'completed' : (s === 'processing' ? 'processing' : (s === 'canceled' ? 'danger' : 'pending')));
